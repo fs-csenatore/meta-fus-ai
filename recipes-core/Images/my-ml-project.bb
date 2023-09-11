@@ -27,6 +27,7 @@ IMAGE_INSTALL += " \
     curl \
     packagegroup-imx-ml \
     tzdata \
+	v4l-utils \
     ${IMAGE_INSTALL_OPENCV} \
 "
 
