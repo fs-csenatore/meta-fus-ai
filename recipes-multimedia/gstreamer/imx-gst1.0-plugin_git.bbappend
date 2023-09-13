@@ -1,0 +1,1 @@
+CFLAGS:append = " -DENABLE_ALL_PXP_FORMATS=1"
