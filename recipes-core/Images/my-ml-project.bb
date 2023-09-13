@@ -28,6 +28,8 @@ IMAGE_INSTALL += " \
     packagegroup-imx-ml \
     tzdata \
 	v4l-utils \
+	git \
+	strace \
     ${IMAGE_INSTALL_OPENCV} \
 "
 
