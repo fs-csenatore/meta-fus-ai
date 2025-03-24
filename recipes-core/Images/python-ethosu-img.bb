@@ -28,9 +28,13 @@ IMAGE_INSTALL += " \
     packagegroup-imx-ml \
     tzdata \
 	v4l-utils \
-	git \
-	strace \
+	media-ctl \
+	libgpiod \
+	libgpiod-tools \
+	i2c-tools \
     ${IMAGE_INSTALL_OPENCV} \
+    python3-setuptools \
+    python3-pip \
 "
 
 IMAGE_INSTALL_OPENCV              = ""
