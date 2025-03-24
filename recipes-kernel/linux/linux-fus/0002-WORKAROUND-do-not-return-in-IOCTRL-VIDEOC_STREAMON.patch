@@ -1,0 +1,31 @@
+From 0cc475987d76d37d67fbb32a466d1db235e57718 Mon Sep 17 00:00:00 2001
+From: Claudio Senatore <senatore@fs-net.de>
+Date: Fri, 14 Feb 2025 10:12:59 +0100
+Subject: [PATCH 2/2] WORKAROUND: do not return in IOCTRL VIDEOC_STREAMON
+
+the DWC-MIPI-CSI driver does not seem to support certain formats here,
+causing the set_fmt() in source_fmt_init() to fail.
+
+The return is deliberately ignored here in order to be able to operate
+the RPI-CAM camera with ap1302 ISP.
+---
+ drivers/staging/media/imx/imx8-isi-cap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/staging/media/imx/imx8-isi-cap.c b/drivers/staging/media/imx/imx8-isi-cap.c
+index c3d6bbeed6..ef1d04a3a2 100644
+--- a/drivers/staging/media/imx/imx8-isi-cap.c
++++ b/drivers/staging/media/imx/imx8-isi-cap.c
+@@ -966,7 +966,8 @@ static int mxc_isi_source_fmt_init(struct mxc_isi_cap_dev *isi_cap)
+ 	ret = v4l2_subdev_call(src_sd, pad, set_fmt, NULL, &src_fmt);
+ 	if (ret < 0 && ret != -ENOIOCTLCMD) {
+ 		v4l2_err(&isi_cap->sd, "set remote fmt fail!\n");
+-		return ret;
++		/* Do not return here, to successfully run VIDEOC_STREAMON */
++		// return ret;
+ 	}
+ 
+ 	memset(&src_fmt, 0, sizeof(src_fmt));
+-- 
+2.40.1
+
